@@ -22,7 +22,7 @@ public class ShopPanel extends VBox {
         Button closeButton = new Button("Close");
         closeButton.setOnAction(e -> {
             primaryStage.setScene(Main.getGameScene());
-            // Show the shop button again when closing the shop
+            // Näytä kaupan nappi uudelleen kaupan sulkemisen jälkeen
             ((GamePanel) ((Scene) primaryStage.getScene()).getRoot()).setShopButtonVisibility(true);
         });
 

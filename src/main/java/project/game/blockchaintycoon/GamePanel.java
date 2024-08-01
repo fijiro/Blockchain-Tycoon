@@ -23,9 +23,8 @@ public class GamePanel extends Pane {
     final int screenHeight = tileSize * maxScreenRow; // 576 pixels
 
     public int rahat = 1;
-    public int rahojenKasvu = 4;
+    public int rahojenKasvu = 4; // rahan kasvu per sekunti
     public int asiakkaat = 1;
-    public int asiakkaidenKasvu = 2;
     public int nodet = 1;
 
     private Canvas canvas;
@@ -45,12 +44,12 @@ public class GamePanel extends Pane {
             primaryStage.setScene(Main.getShopScene());
             setShopButtonVisibility(false);
         });
-        shopButton.setLayoutX(screenWidth - 100); // Adjust position as needed
-        shopButton.setLayoutY(10); // Adjust position as needed
+        shopButton.setLayoutX(screenWidth - 100); // X-koordinaatti
+        shopButton.setLayoutY(10); // Y-koordinaatti
         this.getChildren().add(shopButton);
     }
 
-    public void startGameThread() {
+    public void startGameThread() {  // tässä on game loop
         gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
             update();
             render();
@@ -59,14 +58,14 @@ public class GamePanel extends Pane {
         gameLoop.play();
     }
 
-    public void update() {
+    public void update() { // päivittää laskurit ja tulostaa ne
         rahat += rahojenKasvu;
         System.out.println("Rahat: " + rahat);
         System.out.println("Asiakkaat: " + asiakkaat);
         System.out.println("Nodet: " + nodet);
     }
 
-    public void render() {
+    public void render() { // näkyvät laskurit
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.setFill(Color.BLACK);
         gc.fillRect(0, 0, screenWidth, screenHeight);
