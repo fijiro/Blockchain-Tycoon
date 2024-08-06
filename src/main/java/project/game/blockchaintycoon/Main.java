@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static Scene gameScene;
     private static Scene shopScene;
+    private static Scene helpScene;
 
     @Override
     public void start(Stage primaryStage) {
@@ -34,6 +35,29 @@ public class Main extends Application {
 
         Image startnappi = new Image("startbutton.png");
         ImageView start = new ImageView(startnappi);
+
+        Image ohjeet = new Image("ohjeetdemo.png");
+        ImageView ohjeetkuva = new ImageView(ohjeet);
+
+        Image xnappi = new Image("xnappi.png");
+        ImageView xbtn = new ImageView(xnappi);
+
+        Button xButton = new Button();
+        xButton.setLayoutX(800);
+        xButton.setLayoutY(5);
+        xButton.setGraphic(xbtn);
+        xButton.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-insets: 0;"
+        );
+        xButton.setOnAction(event -> {
+            primaryStage.setScene(gameScene);
+        });
+
+        Pane ohjepane = new Pane();
+        ohjepane.getChildren().add(ohjeetkuva);
+        ohjepane.getChildren().add(xButton);
+        helpScene = new Scene(ohjepane, 900, 700);
 
         Button aloita_peli = new Button();
 
@@ -98,6 +122,7 @@ public class Main extends Application {
     public static Scene getShopScene() {
         return shopScene;
     }
+    public static Scene getHelpScene() { return helpScene; }
 
 
 

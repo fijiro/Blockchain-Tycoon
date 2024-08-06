@@ -2,9 +2,12 @@ package project.game.blockchaintycoon;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -38,6 +41,26 @@ public class GamePanel extends Pane {
     public GamePanel(Stage primaryStage) {
         canvas = new Canvas(screenWidth, screenHeight);
         this.getChildren().add(canvas);
+
+        Image pelitausta = new Image("background.png");
+        ImageView pelibg = new ImageView(pelitausta);
+        this.getChildren().add(pelibg);
+
+        Image helpnappi = new Image("helpnappi.png");
+        ImageView helpbtn = new ImageView(helpnappi);
+        Button helpButton = new Button();
+        helpButton.setOnAction(e -> {
+            Scene helpScene = Main.getHelpScene();
+            primaryStage.setScene(helpScene);
+        });
+        helpButton.setGraphic(helpbtn);
+        helpButton.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-insets: 0;"
+        );
+        helpButton.setLayoutX(800);
+        helpButton.setLayoutY(5);
+        this.getChildren().add(helpButton);
 
 
         // Nappi kauppaan
