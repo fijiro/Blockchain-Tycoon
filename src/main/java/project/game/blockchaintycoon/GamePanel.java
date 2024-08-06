@@ -72,7 +72,7 @@ public class GamePanel extends Pane {
         Button shopButton = new Button("Shop");
         shopButton.setOnAction(e -> {
             primaryStage.setScene(Main.getShopScene());
-            setShopButtonVisibility(false);
+            //setShopButtonVisibility(false);
         });
         shopButton.setLayoutX(500); // X-koordinaatti
         shopButton.setLayoutY(10); // Y-koordinaatti

@@ -1,10 +1,9 @@
 package project.game.blockchaintycoon;
 
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.scene.control.Label;
 
 public class ShopPanel extends VBox {
 
@@ -23,7 +22,7 @@ public class ShopPanel extends VBox {
         closeButton.setOnAction(e -> {
             primaryStage.setScene(Main.getGameScene());
             // Näytä kaupan nappi uudelleen kaupan sulkemisen jälkeen
-            ((GamePanel) ((Scene) primaryStage.getScene()).getRoot()).setShopButtonVisibility(true);
+            //((GamePanel) ((Scene) primaryStage.getScene()).getRoot()).setShopButtonVisibility(true);
         });
 
         // LISÄÄ TÄHÄN NAPIT JA TOIMINNOT
