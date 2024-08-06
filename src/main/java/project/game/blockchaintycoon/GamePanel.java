@@ -35,16 +35,21 @@ public class GamePanel extends Pane {
     private Canvas canvas;
     private Timeline gameLoop;
     private Button shopButton;
+    private Font customFont;
 
 
 
     public GamePanel(Stage primaryStage) {
         canvas = new Canvas(screenWidth, screenHeight);
-        this.getChildren().add(canvas);
+
+
+        customFont = Font.loadFont(getClass().getResourceAsStream("/Molot.otf"), 55);
+
 
         Image pelitausta = new Image("background.png");
         ImageView pelibg = new ImageView(pelitausta);
         this.getChildren().add(pelibg);
+        this.getChildren().add(canvas);
 
         Image helpnappi = new Image("helpnappi.png");
         ImageView helpbtn = new ImageView(helpnappi);
@@ -92,15 +97,14 @@ public class GamePanel extends Pane {
 
     public void render() { // näkyvät laskurit
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        gc.setFill(Color.BLACK);
-        gc.fillRect(0, 0, screenWidth, screenHeight);
+        gc.clearRect(0, 0, screenWidth, screenHeight);
 
         // Lisää rahan määrä näytölle
         gc.setFill(Color.WHITE);
-        gc.setFont(new Font("Arial", 24));  // fontti ja koko
-        gc.fillText("Money: " + rahat, 10, 30);
-        gc.fillText("Customers: " + asiakkaat, 10, 60);
-        gc.fillText("Nodes: " + nodet, 10, 90);
+        gc.setFont(customFont);  // fontti ja koko
+        gc.fillText("Money: " + rahat, 310, 300);
+        gc.fillText("Customers: " + asiakkaat, 310, 400);
+        gc.fillText("Nodes: " + nodet, 310, 350);
 
 
     }
