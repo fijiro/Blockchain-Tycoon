@@ -19,11 +19,13 @@ public class GamePanel extends Pane {
     final int tileSize = originalTileSize * scale; // 48x48 pixels
     final int maxScreenCol = 16;
     final int maxScreenRow = 12;
-    final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-    final int screenHeight = tileSize * maxScreenRow; // 576 pixels
+    /*final int screenWidth = tileSize * maxScreenCol; // 768 pixels
+    final int screenHeight = tileSize * maxScreenRow; // 576 pixels */
+    final int screenWidth = 900;
+    final int screenHeight = 700;
 
     public int rahat = 1;
-    public int rahojenKasvu = 4; // rahan kasvu per sekunti
+    public int rahojenKasvu = 0; // rahan kasvu per sekunti
     public int asiakkaat = 1;
     public int nodet = 1;
 
@@ -44,7 +46,7 @@ public class GamePanel extends Pane {
             primaryStage.setScene(Main.getShopScene());
             setShopButtonVisibility(false);
         });
-        shopButton.setLayoutX(screenWidth - 100); // X-koordinaatti
+        shopButton.setLayoutX(500); // X-koordinaatti
         shopButton.setLayoutY(10); // Y-koordinaatti
         this.getChildren().add(shopButton);
     }
@@ -82,6 +84,10 @@ public class GamePanel extends Pane {
 
     public void setShopButtonVisibility(boolean visible) {
         shopButton.setVisible(visible);
+    }
+
+    public void setRahojenKasvu(int newValue) {
+        this.rahojenKasvu = newValue;
     }
 
 }
