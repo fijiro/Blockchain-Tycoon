@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 public class ShopPanel extends VBox {
 
     private Stage primaryStage;
+    private Button buyAdButton = new Button("Buy Ad");
+    private Button buyNodeButton = new Button("Buy Node");
 
     public ShopPanel(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -26,10 +28,25 @@ public class ShopPanel extends VBox {
         });
 
         // LISÄÄ TÄHÄN NAPIT JA TOIMINNOT
+        //Buying an ad gives a customer. Customer amount is limited to node amount.
+        buyAdButton.setOnAction(_ -> {
+            if (GamePanel.nodet > GamePanel.asiakkaat) {
+                GamePanel.asiakkaat++;
+                updateRahojenKasvu();
+            }
+        });
+        buyNodeButton.setOnAction(_ -> GamePanel.nodet++);
 
-        VBox shopLayout = new VBox(10, shopTitle, closeButton);
+        VBox shopLayout = new VBox(10, shopTitle, closeButton, buyAdButton, buyNodeButton);
         shopLayout.setStyle("-fx-padding: 20px; -fx-alignment: center;");
         this.getChildren().add(shopLayout);
+    }
+
+    public void updateRahojenKasvu() {
+        int defaultIncrease = 4;
+        int customers = GamePanel.asiakkaat;
+        // priceIncrease is defaultIncrease * customer amount. Customer amount is limited to node amount.
+        GamePanel.rahojenKasvu = defaultIncrease * customers;
     }
 }
 

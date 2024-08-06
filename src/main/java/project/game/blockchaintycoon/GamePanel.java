@@ -28,9 +28,9 @@ public class GamePanel extends Pane {
     final int screenHeight = 700;
 
     public int rahat = 1;
-    public int rahojenKasvu = 0; // rahan kasvu per sekunti
-    public int asiakkaat = 1;
-    public int nodet = 1;
+    public static int rahojenKasvu = 0; // rahan kasvu per sekunti
+    public static int asiakkaat = 1;
+    public static int nodet = 1;
 
     private Canvas canvas;
     private Timeline gameLoop;
