@@ -38,6 +38,7 @@ public class GamePanel extends Pane {
     private Timeline gameLoop;
     private Button shopButton;
     private Font customFont;
+    private Font customFont2;
 
 
 
@@ -46,12 +47,50 @@ public class GamePanel extends Pane {
 
 
         customFont = Font.loadFont(getClass().getResourceAsStream("/Molot.otf"), 55);
+        customFont2 = Font.loadFont(getClass().getResourceAsStream("/Molot.otf"), 27);
 
 
-        Image pelitausta = new Image("background.png");
+        Image pelitausta = new Image("gamebg.png");
         ImageView pelibg = new ImageView(pelitausta);
         this.getChildren().add(pelibg);
         this.getChildren().add(canvas);
+
+        Image ostonappi = new Image("buybutton.png");
+        ImageView buybtn = new ImageView(ostonappi);
+        Image ostonappi2 = new Image("buybutton2.png");
+        ImageView buybtn2 = new ImageView(ostonappi2);
+        Button buyNodeButton = new Button();
+        buyNodeButton.setOnAction(e -> {
+            if (rahat >= 10 * nodet) {
+                rahat -= 10 * nodet;
+                nodet++;
+            }
+        });
+        buyNodeButton.setGraphic(buybtn);
+        buyNodeButton.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-insets: 0;"
+        );
+        buyNodeButton.setLayoutX(285);
+        buyNodeButton.setLayoutY(542);
+        this.getChildren().add(buyNodeButton);
+
+        Button buyAdButton = new Button();
+        buyAdButton.setOnAction(e -> {
+            if (rahat >= 40 * asiakkaat && nodet > asiakkaat) {
+                rahat -= 40 * asiakkaat;
+                asiakkaat++;
+                rahojenKasvu = 4 * asiakkaat;
+            }
+        });
+        buyAdButton.setGraphic(buybtn2);
+        buyAdButton.setStyle(
+                "-fx-background-color: transparent;" +
+                        "-fx-background-insets: 0;"
+        );
+        buyAdButton.setLayoutX(505);
+        buyAdButton.setLayoutY(542);
+        this.getChildren().add(buyAdButton);
 
         Image helpnappi = new Image("helpnappi.png");
         ImageView helpbtn = new ImageView(helpnappi);
@@ -70,7 +109,7 @@ public class GamePanel extends Pane {
         this.getChildren().add(helpButton);
 
 
-        // Nappi kauppaan
+        /* Nappi kauppaan
         Button shopButton = new Button("Shop");
         shopButton.setOnAction(e -> {
             primaryStage.setScene(Main.getShopScene());
@@ -78,7 +117,7 @@ public class GamePanel extends Pane {
         });
         shopButton.setLayoutX(500); // X-koordinaatti
         shopButton.setLayoutY(10); // Y-koordinaatti
-        this.getChildren().add(shopButton);
+        this.getChildren().add(shopButton); */
     }
 
     public void startGameThread() {  // tässä on game loop
@@ -105,11 +144,30 @@ public class GamePanel extends Pane {
         gc.setFill(Color.WHITE);
         gc.setFont(customFont);  // fontti ja koko
         DecimalFormat f = new DecimalFormat("##.00");
-        gc.fillText("Money: " + f.format(rahat), 310, 300);
-        gc.fillText("Customers: " + asiakkaat, 310, 400);
-        gc.fillText("Nodes: " + nodet, 310, 350);
+        gc.fillText("Money: " + f.format(rahat) + "$", 270, 225);
+        gc.fillText("Customers: " + asiakkaat, 270, 325);
+        gc.fillText("Nodes: " + nodet, 270, 275);
 
+        if (rahat >= 40 * asiakkaat && nodet > asiakkaat) {
+            gc.setFill(Color.GREEN);
+            gc.setFont(customFont2);
+            gc.fillText((40 * asiakkaat) + "$", 547, 540);
+        } else {
+            gc.setFill(Color.RED);
+            gc.setFont(customFont2);
+            gc.fillText((40 * asiakkaat) + "$", 547, 540);
+        }
 
+        if (rahat >= 10 * nodet) {
+            gc.setFill(Color.GREEN);
+            gc.setFont(customFont2);
+            gc.fillText((10 * nodet) + "$", 333, 540);
+        } else {
+            gc.setFill(Color.RED);
+            gc.setFont(customFont2);
+            gc.fillText((10 * nodet) + "$", 333, 540);
+
+        }
     }
 
     public void setShopButtonVisibility(boolean visible) {
