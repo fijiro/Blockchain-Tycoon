@@ -42,7 +42,6 @@ public class ShopPanel extends VBox {
                 GamePanel.rahat -= 10 * GamePanel.nodet;
                 GamePanel.nodet++;
             }
-            ;
         });
 
         VBox shopLayout = new VBox(10, shopTitle, closeButton, buyAdButton, buyNodeButton);
