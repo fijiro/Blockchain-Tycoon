@@ -14,6 +14,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.scene.text.Font;
 
+import java.text.DecimalFormat;
+
 public class GamePanel extends Pane {
 
     final int originalTileSize = 16; // 16x16 pixels
@@ -27,7 +29,7 @@ public class GamePanel extends Pane {
     final int screenWidth = 900;
     final int screenHeight = 700;
 
-    public int rahat = 1;
+    public static double rahat = 1;
     public static int rahojenKasvu = 0; // rahan kasvu per sekunti
     public static int asiakkaat = 1;
     public static int nodet = 1;
@@ -80,7 +82,7 @@ public class GamePanel extends Pane {
     }
 
     public void startGameThread() {  // tässä on game loop
-        gameLoop = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
+        gameLoop = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             update();
             render();
         }));
@@ -89,7 +91,7 @@ public class GamePanel extends Pane {
     }
 
     public void update() { // päivittää laskurit ja tulostaa ne
-        rahat += rahojenKasvu;
+        rahat +=  (double) rahojenKasvu / 10;
         System.out.println("Rahat: " + rahat);
         System.out.println("Asiakkaat: " + asiakkaat);
         System.out.println("Nodet: " + nodet);
@@ -102,7 +104,8 @@ public class GamePanel extends Pane {
         // Lisää rahan määrä näytölle
         gc.setFill(Color.WHITE);
         gc.setFont(customFont);  // fontti ja koko
-        gc.fillText("Money: " + rahat, 310, 300);
+        DecimalFormat f = new DecimalFormat("##.00");
+        gc.fillText("Money: " + f.format(rahat), 310, 300);
         gc.fillText("Customers: " + asiakkaat, 310, 400);
         gc.fillText("Nodes: " + nodet, 310, 350);
 

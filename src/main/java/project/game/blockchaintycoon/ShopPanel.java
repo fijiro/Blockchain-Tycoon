@@ -29,13 +29,21 @@ public class ShopPanel extends VBox {
 
         // LISÄÄ TÄHÄN NAPIT JA TOIMINNOT
         //Buying an ad gives a customer. Customer amount is limited to node amount.
+        //Ad price is 40x customer amount
         buyAdButton.setOnAction(_ -> {
-            if (GamePanel.nodet > GamePanel.asiakkaat) {
+            if (GamePanel.rahat >= 40 * GamePanel.asiakkaat && GamePanel.nodet > GamePanel.asiakkaat) {
+                GamePanel.rahat -= 40 * GamePanel.asiakkaat;
                 GamePanel.asiakkaat++;
                 updateRahojenKasvu();
             }
         });
-        buyNodeButton.setOnAction(_ -> GamePanel.nodet++);
+        buyNodeButton.setOnAction(_ -> {
+            if (GamePanel.rahat >= 10 * GamePanel.nodet) {
+                GamePanel.rahat -= 10 * GamePanel.nodet;
+                GamePanel.nodet++;
+            }
+            ;
+        });
 
         VBox shopLayout = new VBox(10, shopTitle, closeButton, buyAdButton, buyNodeButton);
         shopLayout.setStyle("-fx-padding: 20px; -fx-alignment: center;");
