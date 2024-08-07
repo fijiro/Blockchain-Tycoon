@@ -76,6 +76,7 @@ public class Main extends Application {
         Scene aloitusScene = new Scene(startPane, 900, 700);
 
         primaryStage.setTitle("Blockchain Tycoon");
+        primaryStage.getIcons().add(new Image("applicationicon.png"));
         primaryStage.setScene(aloitusScene); // gameScene on oletuksena
         primaryStage.setResizable(false);
         primaryStage.setFullScreen(false);  // Koko näytön tila mut emt tullaanko käyttämään
