@@ -18,8 +18,8 @@ public class Main extends Application {
         GamePanel gamePanel = new GamePanel(primaryStage);
         gameScene = new Scene(gamePanel, gamePanel.screenWidth, gamePanel.screenHeight);
 
-        ShopPanel shopPanel = new ShopPanel(primaryStage);
-        shopScene = new Scene(shopPanel, gamePanel.screenWidth, gamePanel.screenHeight);
+        //ShopPanel shopPanel = new ShopPanel(primaryStage);
+        //shopScene = new Scene(shopPanel, gamePanel.screenWidth, gamePanel.screenHeight);
 
 
 

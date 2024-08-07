@@ -10,9 +10,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import javafx.scene.text.Font;
 
 import java.text.DecimalFormat;
 
@@ -29,17 +29,17 @@ public class GamePanel extends Pane {
     final int screenWidth = 900;
     final int screenHeight = 700;
 
-    public static double rahat = 1;
-    public static int rahojenKasvu = 0; // rahan kasvu per sekunti
-    public static int asiakkaat = 1;
-    public static int nodet = 1;
+    public double rahat = 1;
+    public int rahojenKasvu = 0; // rahan kasvu per sekunti
+    public int asiakkaat = 1;
+    public int nodet = 1;
+    private int upgrades = 1;
 
     private Canvas canvas;
     private Timeline gameLoop;
     private Button shopButton;
     private Font customFont;
     private Font customFont2;
-
 
 
     public GamePanel(Stage primaryStage) {
@@ -59,6 +59,7 @@ public class GamePanel extends Pane {
         ImageView buybtn = new ImageView(ostonappi);
         Image ostonappi2 = new Image("buybutton2.png");
         ImageView buybtn2 = new ImageView(ostonappi2);
+
         Button buyNodeButton = new Button();
         buyNodeButton.setOnAction(e -> {
             if (rahat >= 10 * nodet) {
@@ -67,10 +68,7 @@ public class GamePanel extends Pane {
             }
         });
         buyNodeButton.setGraphic(buybtn);
-        buyNodeButton.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background-insets: 0;"
-        );
+        buyNodeButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyNodeButton.setLayoutX(285);
         buyNodeButton.setLayoutY(542);
         this.getChildren().add(buyNodeButton);
@@ -81,16 +79,29 @@ public class GamePanel extends Pane {
                 rahat -= 40 * asiakkaat;
                 asiakkaat++;
                 rahojenKasvu = 4 * asiakkaat;
+                rahojenKasvu += (upgrades * 10);
             }
         });
         buyAdButton.setGraphic(buybtn2);
-        buyAdButton.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background-insets: 0;"
-        );
+        buyAdButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyAdButton.setLayoutX(505);
         buyAdButton.setLayoutY(542);
         this.getChildren().add(buyAdButton);
+
+        Button buyPartsButton = new Button();
+        buyPartsButton.setOnAction(_ -> {
+            if (rahat >= 100 * upgrades * upgrades) {
+                rahat -= 100 * upgrades * upgrades;
+                upgrades++;
+                rahojenKasvu = 4 * asiakkaat;
+                rahojenKasvu += (upgrades * 10);
+            }
+        });
+        buyPartsButton.setGraphic(new ImageView(ostonappi));
+        buyPartsButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
+        buyPartsButton.setLayoutX(725);
+        buyPartsButton.setLayoutY(542);
+        this.getChildren().add(buyPartsButton);
 
         Image helpnappi = new Image("helpnappi.png");
         ImageView helpbtn = new ImageView(helpnappi);
@@ -100,10 +111,7 @@ public class GamePanel extends Pane {
             primaryStage.setScene(helpScene);
         });
         helpButton.setGraphic(helpbtn);
-        helpButton.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background-insets: 0;"
-        );
+        helpButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         helpButton.setLayoutX(800);
         helpButton.setLayoutY(5);
         this.getChildren().add(helpButton);
@@ -130,7 +138,7 @@ public class GamePanel extends Pane {
     }
 
     public void update() { // päivittää laskurit ja tulostaa ne
-        rahat +=  (double) rahojenKasvu / 10;
+        rahat += (double) rahojenKasvu / 10;
         System.out.println("Rahat: " + rahat);
         System.out.println("Asiakkaat: " + asiakkaat);
         System.out.println("Nodet: " + nodet);
@@ -147,26 +155,38 @@ public class GamePanel extends Pane {
         gc.fillText("Money: " + f.format(rahat) + "$", 270, 225);
         gc.fillText("Customers: " + asiakkaat, 270, 325);
         gc.fillText("Nodes: " + nodet, 270, 275);
-
+        //Ad button rendering
         if (rahat >= 40 * asiakkaat && nodet > asiakkaat) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
             gc.fillText((40 * asiakkaat) + "$", 547, 540);
-        } else {
+        }
+        else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
             gc.fillText((40 * asiakkaat) + "$", 547, 540);
         }
-
+        //Node button rendering
         if (rahat >= 10 * nodet) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
             gc.fillText((10 * nodet) + "$", 333, 540);
-        } else {
+        }
+        else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
             gc.fillText((10 * nodet) + "$", 333, 540);
-
+        }
+        //Upgrade button rendering
+        if (rahat >= 100 * upgrades * upgrades) {
+            gc.setFill(Color.GREEN);
+            gc.setFont(customFont2);
+            gc.fillText((100 * upgrades * upgrades) + "$", 761, 540);
+        }
+        else {
+            gc.setFill(Color.RED);
+            gc.setFont(customFont2);
+            gc.fillText((100 * upgrades * upgrades) + "$", 761, 540);
         }
     }
 
