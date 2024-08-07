@@ -28,38 +28,35 @@ public class GamePanel extends Pane {
     final int screenWidth = 900;
     final int screenHeight = 700;
 
-    public double rahat = 1;
-    public int rahojenKasvu = 0; // rahan kasvu per sekunti
-    public int asiakkaat = 1;
-    public int nodet = 1;
+    private double money = 1;
+    private int moneyGrowth = 0; // money Growth per second
+    private int customers = 1;
+    private int nodes = 1;
     private int upgrades = 1;
 
     private final Canvas canvas;
     //private Button shopButton;
-    private final Font customFont;
-    private final Font customFont2;
+    private final Font customFont, customFont2;
 
 
     public GamePanel(Stage primaryStage) {
         canvas = new Canvas(screenWidth, screenHeight);
 
-
         customFont = Font.loadFont(getClass().getResourceAsStream("/Molot.otf"), 55);
         customFont2 = Font.loadFont(getClass().getResourceAsStream("/Molot.otf"), 27);
 
-
-        Image pelitausta = new Image("gamebg.png");
-        ImageView pelibg = new ImageView(pelitausta);
-        this.getChildren().add(pelibg);
+        Image buyButtonImage = new Image("buybutton.png");
+        Image gameBgImage = new Image("gamebg.png");
+        ImageView gameBg = new ImageView(gameBgImage);
+        this.getChildren().add(gameBg);
         this.getChildren().add(canvas);
 
-        Image buyButtonImage = new Image("buybutton.png");
 
         Button buyNodeButton = new Button();
-        buyNodeButton.setOnAction(e -> {
-            if (rahat >= 10 * nodet) {
-                rahat -= 10 * nodet;
-                nodet++;
+        buyNodeButton.setOnAction(_ -> {
+            if (money >= 10 * nodes) {
+                money -= 10 * nodes;
+                nodes++;
             }
         });
         buyNodeButton.setGraphic(new ImageView(buyButtonImage));
@@ -70,11 +67,11 @@ public class GamePanel extends Pane {
 
         Button buyAdButton = new Button();
         buyAdButton.setOnAction(_ -> {
-            if (rahat >= 40 * asiakkaat && nodet > asiakkaat) {
-                rahat -= 40 * asiakkaat;
-                asiakkaat++;
-                rahojenKasvu = 4 * asiakkaat;
-                rahojenKasvu += (upgrades * 10);
+            if (money >= 40 * customers && nodes > customers) {
+                money -= 40 * customers;
+                customers++;
+                moneyGrowth = 4 * customers;
+                moneyGrowth += (upgrades * 10);
             }
         });
         buyAdButton.setGraphic(new ImageView(buyButtonImage));
@@ -85,11 +82,11 @@ public class GamePanel extends Pane {
 
         Button buyPartsButton = new Button();
         buyPartsButton.setOnAction(_ -> {
-            if (rahat >= 100 * upgrades * upgrades) {
-                rahat -= 100 * upgrades * upgrades;
+            if (money >= 100 * upgrades * upgrades) {
+                money -= 100 * upgrades * upgrades;
                 upgrades++;
-                rahojenKasvu = 4 * asiakkaat;
-                rahojenKasvu += (upgrades * 10);
+                moneyGrowth = 4 * customers;
+                moneyGrowth += (upgrades * 10);
             }
         });
         buyPartsButton.setGraphic(new ImageView(buyButtonImage));
@@ -123,7 +120,7 @@ public class GamePanel extends Pane {
     }
 
     public void startGameThread() {  // tässä on game loop
-        Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+        Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(100), _ -> {
             update();
             render();
         }));
@@ -132,10 +129,10 @@ public class GamePanel extends Pane {
     }
 
     public void update() { // päivittää laskurit ja tulostaa ne
-        rahat += (double) rahojenKasvu / 10;
-        System.out.println(STR."Rahat: \{rahat}");
-        System.out.println(STR."Asiakkaat: \{asiakkaat}");
-        System.out.println(STR."Nodet: \{nodet}");
+        money += (double) moneyGrowth / 10;
+        System.out.println(STR."Rahat: \{money}");
+        System.out.println(STR."Asiakkaat: \{customers}");
+        System.out.println(STR."Nodet: \{nodes}");
     }
 
     public void render() { // näkyvät laskurit
@@ -146,33 +143,33 @@ public class GamePanel extends Pane {
         gc.setFill(Color.WHITE);
         gc.setFont(customFont);  // fontti ja koko
         DecimalFormat f = new DecimalFormat("##.00");
-        gc.fillText(STR."Money: \{f.format(rahat)}$", 270, 225);
-        gc.fillText(STR."Customers: \{asiakkaat}", 270, 325);
-        gc.fillText(STR."Nodes: \{nodet}", 270, 275);
+        gc.fillText(STR."Money: \{f.format(money)}$", 270, 225);
+        gc.fillText(STR."Customers: \{customers}", 270, 325);
+        gc.fillText(STR."Nodes: \{nodes}", 270, 275);
         //Ad button rendering
-        if (rahat >= 40 * asiakkaat && nodet > asiakkaat) {
+        if (money >= 40 * customers && nodes > customers) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{40 * asiakkaat}$", 547, 540);
+            gc.fillText(STR."\{40 * customers}$", 547, 540);
         }
         else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{40 * asiakkaat}$", 547, 540);
+            gc.fillText(STR."\{40 * customers}$", 547, 540);
         }
         //Node button rendering
-        if (rahat >= 10 * nodet) {
+        if (money >= 10 * nodes) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{10 * nodet}$", 333, 540);
+            gc.fillText(STR."\{10 * nodes}$", 333, 540);
         }
         else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{10 * nodet}$", 333, 540);
+            gc.fillText(STR."\{10 * nodes}$", 333, 540);
         }
         //Upgrade button rendering
-        if (rahat >= 100 * upgrades * upgrades) {
+        if (money >= 100 * upgrades * upgrades) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
             gc.fillText(STR."\{100 * upgrades * upgrades}$", 761, 540);
@@ -188,8 +185,8 @@ public class GamePanel extends Pane {
 //        shopButton.setVisible(visible);
 //    }
 
-    public void setRahojenKasvu(int newValue) {
-        this.rahojenKasvu = newValue;
+    public void setMoneyGrowth(int newValue) {
+        this.moneyGrowth = newValue;
     }
 
 }

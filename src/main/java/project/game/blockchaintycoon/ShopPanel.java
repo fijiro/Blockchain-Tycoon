@@ -31,16 +31,16 @@ public class ShopPanel extends VBox {
         //Buying an ad gives a customer. Customer amount is limited to node amount.
         //Ad price is 40x customer amount
         buyAdButton.setOnAction(_ -> {
-            if (GamePanel.rahat >= 40 * GamePanel.asiakkaat && GamePanel.nodet > GamePanel.asiakkaat) {
-                GamePanel.rahat -= 40 * GamePanel.asiakkaat;
-                GamePanel.asiakkaat++;
+            if (GamePanel.money >= 40 * GamePanel.customers && GamePanel.nodes > GamePanel.customers) {
+                GamePanel.money -= 40 * GamePanel.customers;
+                GamePanel.customers++;
                 updateRahojenKasvu();
             }
         });
         buyNodeButton.setOnAction(_ -> {
-            if (GamePanel.rahat >= 10 * GamePanel.nodet) {
-                GamePanel.rahat -= 10 * GamePanel.nodet;
-                GamePanel.nodet++;
+            if (GamePanel.money >= 10 * GamePanel.nodes) {
+                GamePanel.money -= 10 * GamePanel.nodes;
+                GamePanel.nodes++;
             }
         });
 
@@ -51,9 +51,9 @@ public class ShopPanel extends VBox {
 
     public void updateRahojenKasvu() {
         int defaultIncrease = 4;
-        int customers = GamePanel.asiakkaat;
+        int customers = GamePanel.customers;
         // priceIncrease is defaultIncrease * customer amount. Customer amount is limited to node amount.
-        GamePanel.rahojenKasvu = defaultIncrease * customers;
+        GamePanel.moneyGrowth = defaultIncrease * customers;
     }
 }
 */
