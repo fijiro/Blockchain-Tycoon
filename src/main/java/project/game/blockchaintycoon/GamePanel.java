@@ -17,15 +17,14 @@ import javafx.util.Duration;
 import java.text.DecimalFormat;
 
 public class GamePanel extends Pane {
-
-    final int originalTileSize = 16; // 16x16 pixels
-    final int scale = 3;
     /*
-        final int tileSize = originalTileSize * scale; // 48x48 pixels
-        final int maxScreenCol = 16;
-        final int maxScreenRow = 12;
-        final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-        final int screenHeight = tileSize * maxScreenRow; // 576 pixels */
+        final int originalTileSize = 16; // 16x16 pixels
+        final int scale = 3;
+            final int tileSize = originalTileSize * scale; // 48x48 pixels
+            final int maxScreenCol = 16;
+            final int maxScreenRow = 12;
+            final int screenWidth = tileSize * maxScreenCol; // 768 pixels
+            final int screenHeight = tileSize * maxScreenRow; // 576 pixels */
     final int screenWidth = 900;
     final int screenHeight = 700;
 
@@ -36,7 +35,6 @@ public class GamePanel extends Pane {
     private int upgrades = 1;
 
     private final Canvas canvas;
-    private Timeline gameLoop;
     //private Button shopButton;
     private final Font customFont;
     private final Font customFont2;
@@ -55,10 +53,7 @@ public class GamePanel extends Pane {
         this.getChildren().add(pelibg);
         this.getChildren().add(canvas);
 
-        Image ostonappi = new Image("buybutton.png");
-        ImageView buybtn = new ImageView(ostonappi);
-        Image ostonappi2 = new Image("buybutton2.png");
-        ImageView buybtn2 = new ImageView(ostonappi2);
+        Image buyButtonImage = new Image("buybutton.png");
 
         Button buyNodeButton = new Button();
         buyNodeButton.setOnAction(e -> {
@@ -67,14 +62,14 @@ public class GamePanel extends Pane {
                 nodet++;
             }
         });
-        buyNodeButton.setGraphic(buybtn);
+        buyNodeButton.setGraphic(new ImageView(buyButtonImage));
         buyNodeButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyNodeButton.setLayoutX(285);
         buyNodeButton.setLayoutY(542);
         this.getChildren().add(buyNodeButton);
 
         Button buyAdButton = new Button();
-        buyAdButton.setOnAction(e -> {
+        buyAdButton.setOnAction(_ -> {
             if (rahat >= 40 * asiakkaat && nodet > asiakkaat) {
                 rahat -= 40 * asiakkaat;
                 asiakkaat++;
@@ -82,7 +77,7 @@ public class GamePanel extends Pane {
                 rahojenKasvu += (upgrades * 10);
             }
         });
-        buyAdButton.setGraphic(buybtn2);
+        buyAdButton.setGraphic(new ImageView(buyButtonImage));
         buyAdButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyAdButton.setLayoutX(505);
         buyAdButton.setLayoutY(542);
@@ -97,20 +92,19 @@ public class GamePanel extends Pane {
                 rahojenKasvu += (upgrades * 10);
             }
         });
-        buyPartsButton.setGraphic(new ImageView(ostonappi));
+        buyPartsButton.setGraphic(new ImageView(buyButtonImage));
         buyPartsButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyPartsButton.setLayoutX(725);
         buyPartsButton.setLayoutY(542);
         this.getChildren().add(buyPartsButton);
 
-        Image helpnappi = new Image("helpnappi.png");
-        ImageView helpbtn = new ImageView(helpnappi);
+        Image helpButtonImage = new Image("helpnappi.png");
         Button helpButton = new Button();
-        helpButton.setOnAction(e -> {
+        helpButton.setOnAction(_ -> {
             Scene helpScene = Main.getHelpScene();
             primaryStage.setScene(helpScene);
         });
-        helpButton.setGraphic(helpbtn);
+        helpButton.setGraphic(new ImageView(helpButtonImage));
         helpButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         helpButton.setLayoutX(800);
         helpButton.setLayoutY(5);
@@ -129,7 +123,7 @@ public class GamePanel extends Pane {
     }
 
     public void startGameThread() {  // tässä on game loop
-        gameLoop = new Timeline(new KeyFrame(Duration.millis(100), e -> {
+        Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(100), e -> {
             update();
             render();
         }));
