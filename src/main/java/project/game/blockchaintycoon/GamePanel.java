@@ -61,7 +61,7 @@ public class GamePanel extends Pane {
         });
         buyNodeButton.setGraphic(new ImageView(buyButtonImage));
         buyNodeButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
-        buyNodeButton.setLayoutX(285);
+        buyNodeButton.setLayoutX(163);
         buyNodeButton.setLayoutY(542);
         this.getChildren().add(buyNodeButton);
 
@@ -76,7 +76,7 @@ public class GamePanel extends Pane {
         });
         buyAdButton.setGraphic(new ImageView(buyButtonImage));
         buyAdButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
-        buyAdButton.setLayoutX(505);
+        buyAdButton.setLayoutX(383);
         buyAdButton.setLayoutY(542);
         this.getChildren().add(buyAdButton);
 
@@ -91,7 +91,7 @@ public class GamePanel extends Pane {
         });
         buyPartsButton.setGraphic(new ImageView(buyButtonImage));
         buyPartsButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
-        buyPartsButton.setLayoutX(725);
+        buyPartsButton.setLayoutX(625);
         buyPartsButton.setLayoutY(542);
         this.getChildren().add(buyPartsButton);
 
@@ -150,34 +150,34 @@ public class GamePanel extends Pane {
         if (money >= 40 * customers && nodes > customers) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{40 * customers}$", 547, 540);
+            gc.fillText(STR."\{40 * customers}$", 425, 540);
         }
         else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{40 * customers}$", 547, 540);
+            gc.fillText(STR."\{40 * customers}$", 425, 540);
         }
         //Node button rendering
         if (money >= 10 * nodes) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{10 * nodes}$", 333, 540);
+            gc.fillText(STR."\{10 * nodes}$", 211, 540);
         }
         else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{10 * nodes}$", 333, 540);
+            gc.fillText(STR."\{10 * nodes}$", 211, 540);
         }
         //Upgrade button rendering
         if (money >= 100 * upgrades * upgrades) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{100 * upgrades * upgrades}$", 761, 540);
+            gc.fillText(STR."\{100 * upgrades * upgrades}$", 663, 540);
         }
         else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
-            gc.fillText(STR."\{100 * upgrades * upgrades}$", 761, 540);
+            gc.fillText(STR."\{100 * upgrades * upgrades}$", 663, 540);
         }
     }
 
