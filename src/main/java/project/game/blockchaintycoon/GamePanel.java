@@ -51,7 +51,7 @@ public class GamePanel extends Pane {
         this.getChildren().add(gameBg);
         this.getChildren().add(canvas);
 
-
+        //TODO: more nodes per customer
         Button buyNodeButton = new Button();
         buyNodeButton.setOnAction(_ -> {
             if (money >= 10 * nodes) {
