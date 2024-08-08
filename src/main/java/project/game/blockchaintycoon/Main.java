@@ -48,8 +48,8 @@ public class Main extends Application {
         Pane lorePane = new Pane(loreImage, startGameButton);
         Scene loreScene = new Scene(lorePane, 900, 700); // scene lorelle
 
-        startGameButton.setLayoutX(325);
-        startGameButton.setLayoutY(450);
+        startGameButton.setLayoutX(625);
+        startGameButton.setLayoutY(350);
         startGameButton.setGraphic(startImage);
         startGameButton.setStyle(
                 "-fx-background-color: transparent;" +
