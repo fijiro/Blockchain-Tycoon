@@ -17,18 +17,10 @@ import javafx.util.Duration;
 import java.text.DecimalFormat;
 
 public class GamePanel extends Pane {
-    /*
-        final int originalTileSize = 16; // 16x16 pixels
-        final int scale = 3;
-            final int tileSize = originalTileSize * scale; // 48x48 pixels
-            final int maxScreenCol = 16;
-            final int maxScreenRow = 12;
-            final int screenWidth = tileSize * maxScreenCol; // 768 pixels
-            final int screenHeight = tileSize * maxScreenRow; // 576 pixels */
     final int screenWidth = 900;
     final int screenHeight = 700;
     Timeline gameLoop;
-    private double money = 9000;
+    private double money = 1;
     private int moneyGrowth = 4; // money Growth per second
     private int customers = 1;
     private int nodes = 1;
@@ -36,7 +28,7 @@ public class GamePanel extends Pane {
     private int upgrades = 1;
     private final Canvas canvas;
     private final Font customFont, customFont2;
-    private Button winButton;
+    private final Button winButton;
 
     public GamePanel(Stage primaryStage) {
         canvas = new Canvas(screenWidth, screenHeight);
@@ -185,23 +177,12 @@ public class GamePanel extends Pane {
             gc.setFont(customFont2);
             gc.fillText(STR."\{100 * upgrades * upgrades}$", 663, 540);
         }
+        //Win price rendering
         if(money >= 1000) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
             gc.fillText("1000$",200,50);
         }
-//        else {
-//            gc.setFill(Color.RED);
-//            gc.setFont(customFont2);
-//            gc.fillText("1000$",200,50);
-//        }
-    }
 
-//    public void setShopButtonVisibility(boolean visible) {
-//        shopButton.setVisible(visible);
-//    }
-
-    public void setMoneyGrowth(int newValue) {
-        this.moneyGrowth = newValue;
     }
 }

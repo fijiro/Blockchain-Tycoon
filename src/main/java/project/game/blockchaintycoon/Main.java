@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     private static Scene gameScene;
-    //private static Scene shopScene;
     private static Scene winScene;
     private static Scene helpScene;
 
@@ -19,16 +18,13 @@ public class Main extends Application {
         GamePanel gamePanel = new GamePanel(primaryStage);
         gameScene = new Scene(gamePanel, gamePanel.screenWidth, gamePanel.screenHeight);
 
-        //ShopPanel shopPanel = new ShopPanel(primaryStage);
-        //shopScene = new Scene(shopPanel, gamePanel.screenWidth, gamePanel.screenHeight);
-
         ImageView startBg = new ImageView(new Image("start.png"));
         ImageView upImage = new ImageView(new Image("newgamebutton.png"));
         ImageView loreImage = new ImageView(new Image("lorescreen.png"));
         ImageView startImage = new ImageView(new Image("startbutton.png"));
         startImage.setScaleY(0.5f);
         startImage.setScaleX(0.5f);
-        ImageView tutorialImage = new ImageView(new Image("ohjeetdemo.png"));
+        ImageView tutorialImage = new ImageView(new Image("gameinstructions.png"));
         ImageView xButtonImage = new ImageView(new Image("xnappi.png"));
 
         Button xButton = new Button();
@@ -44,7 +40,7 @@ public class Main extends Application {
         helpScene = new Scene(tutorialPane, 900, 700);
         Button startGameButton = new Button();
         Pane lorePane = new Pane(loreImage, startGameButton);
-        Scene loreScene = new Scene(lorePane, 900, 700); // scene lorelle
+        Scene loreScene = new Scene(lorePane, 900, 700);
 
         Button restartButton = new Button();
         restartButton.setLayoutX(500);
@@ -81,20 +77,13 @@ public class Main extends Application {
 
         primaryStage.setTitle("Blockchain Tycoon");
         primaryStage.getIcons().add(new Image("applicationicon.png"));
-        primaryStage.setScene(aloitusScene); // gameScene on oletuksena
+        primaryStage.setScene(aloitusScene);
         primaryStage.setResizable(false);
-        primaryStage.setFullScreen(false);  // Koko näytön tila mut emt tullaanko käyttämään
+        primaryStage.setFullScreen(false);
         primaryStage.setOnCloseRequest(_ -> System.exit(0));
         primaryStage.show();
     }
 
-//    public static Scene getGameScene() {
-//        return gameScene;
-//    }
-
-    //    public static Scene getShopScene() {
-//        return shopScene;
-//    }
     public static Scene getHelpScene() {return helpScene;}
 
     public static Scene getWinScene() {return winScene;}
