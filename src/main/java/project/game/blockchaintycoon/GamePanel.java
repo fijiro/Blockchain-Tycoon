@@ -183,12 +183,12 @@ public class GamePanel extends Pane {
         if(money >= 1000) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
-            gc.fillText("100",200,50);
+            gc.fillText("1000$",200,50);
         }
         else {
             gc.setFill(Color.RED);
             gc.setFont(customFont2);
-            gc.fillText("100$",200,50);
+            gc.fillText("1000$",200,50);
         }
     }
 
