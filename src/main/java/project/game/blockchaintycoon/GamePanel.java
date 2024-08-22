@@ -27,17 +27,15 @@ public class GamePanel extends Pane {
             final int screenHeight = tileSize * maxScreenRow; // 576 pixels */
     final int screenWidth = 900;
     final int screenHeight = 700;
-
+    Timeline gameLoop;
     private double money = 1;
-    private int moneyGrowth = 0; // money Growth per second
+    private int moneyGrowth = 4; // money Growth per second
     private int customers = 1;
     private int nodes = 1;
+    private final int nodesPerCustomer = 2;
     private int upgrades = 1;
-
     private final Canvas canvas;
-    //private Button shopButton;
     private final Font customFont, customFont2;
-
 
     public GamePanel(Stage primaryStage) {
         canvas = new Canvas(screenWidth, screenHeight);
@@ -51,7 +49,6 @@ public class GamePanel extends Pane {
         this.getChildren().add(gameBg);
         this.getChildren().add(canvas);
 
-        //TODO: more nodes per customer
         Button buyNodeButton = new Button();
         buyNodeButton.setOnAction(_ -> {
             if (money >= 10 * nodes) {
@@ -63,11 +60,10 @@ public class GamePanel extends Pane {
         buyNodeButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyNodeButton.setLayoutX(163);
         buyNodeButton.setLayoutY(542);
-        this.getChildren().add(buyNodeButton);
 
         Button buyAdButton = new Button();
         buyAdButton.setOnAction(_ -> {
-            if (money >= 40 * customers && nodes > customers) {
+            if (money >= 40 * customers && nodes > customers * nodesPerCustomer) {
                 money -= 40 * customers;
                 customers++;
                 moneyGrowth = 4 * customers;
@@ -78,7 +74,6 @@ public class GamePanel extends Pane {
         buyAdButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyAdButton.setLayoutX(383);
         buyAdButton.setLayoutY(542);
-        this.getChildren().add(buyAdButton);
 
         Button buyPartsButton = new Button();
         buyPartsButton.setOnAction(_ -> {
@@ -93,7 +88,6 @@ public class GamePanel extends Pane {
         buyPartsButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         buyPartsButton.setLayoutX(625);
         buyPartsButton.setLayoutY(542);
-        this.getChildren().add(buyPartsButton);
 
         Image helpButtonImage = new Image("helpnappi.png");
         Button helpButton = new Button();
@@ -105,22 +99,30 @@ public class GamePanel extends Pane {
         helpButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         helpButton.setLayoutX(800);
         helpButton.setLayoutY(5);
-        this.getChildren().add(helpButton);
 
-
-        /* Nappi kauppaan
-        Button shopButton = new Button("Shop");
-        shopButton.setOnAction(e -> {
-            primaryStage.setScene(Main.getShopScene());
-            //setShopButtonVisibility(false);
+        Image winButtonImage = new Image("newgamebutton.png");
+        Button winButton = new Button();
+        winButton.setGraphic(new ImageView(winButtonImage));
+        winButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
+        winButton.setLayoutX(50);
+        winButton.setLayoutY(50);
+        winButton.setOnAction(_ -> {
+            Scene winScene = Main.getWinScene();
+            stopGameThread();
+            money = 1;
+            moneyGrowth = 4;
+            customers = 1;
+            nodes = 1;
+            upgrades = 1;
+            primaryStage.setScene(winScene);
         });
-        shopButton.setLayoutX(500); // X-koordinaatti
-        shopButton.setLayoutY(10); // Y-koordinaatti
-        this.getChildren().add(shopButton); */
+
+        //Render all buttons to the screen
+        this.getChildren().addAll(buyNodeButton, buyAdButton, buyPartsButton, helpButton, winButton);
     }
 
-    public void startGameThread() {  // tässä on game loop
-        Timeline gameLoop = new Timeline(new KeyFrame(Duration.millis(100), _ -> {
+    public void startGameThread() {  // Main game loop. Updates every 0.1 seconds.
+        gameLoop = new Timeline(new KeyFrame(Duration.millis(100), _ -> {
             update();
             render();
         }));
@@ -128,26 +130,25 @@ public class GamePanel extends Pane {
         gameLoop.play();
     }
 
-    public void update() { // päivittää laskurit ja tulostaa ne
-        money += (double) moneyGrowth / 10;
-        System.out.println(STR."Rahat: \{money}");
-        System.out.println(STR."Asiakkaat: \{customers}");
-        System.out.println(STR."Nodet: \{nodes}");
+    public void stopGameThread() {
+        gameLoop.stop();
     }
 
-    public void render() { // näkyvät laskurit
+    public void update() { // Updates current money by its growth
+        money += (double) moneyGrowth / 10;
+    }
+
+    public void render() { // Render prices for ads, nodes and upgrades to the screen.
         GraphicsContext gc = canvas.getGraphicsContext2D();
         gc.clearRect(0, 0, screenWidth, screenHeight);
-
-        // Lisää rahan määrä näytölle
         gc.setFill(Color.WHITE);
-        gc.setFont(customFont);  // fontti ja koko
+        gc.setFont(customFont);
         DecimalFormat f = new DecimalFormat("##.00");
         gc.fillText(STR."Money: \{f.format(money)}$", 270, 225);
         gc.fillText(STR."Customers: \{customers}", 270, 325);
         gc.fillText(STR."Nodes: \{nodes}", 270, 275);
-        //Ad button rendering
-        if (money >= 40 * customers && nodes > customers) {
+        //Ad price rendering
+        if (money >= 40 * customers && nodes > customers * nodesPerCustomer) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
             gc.fillText(STR."\{40 * customers}$", 425, 540);
@@ -157,7 +158,7 @@ public class GamePanel extends Pane {
             gc.setFont(customFont2);
             gc.fillText(STR."\{40 * customers}$", 425, 540);
         }
-        //Node button rendering
+        //Node price rendering
         if (money >= 10 * nodes) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
@@ -168,7 +169,7 @@ public class GamePanel extends Pane {
             gc.setFont(customFont2);
             gc.fillText(STR."\{10 * nodes}$", 211, 540);
         }
-        //Upgrade button rendering
+        //Upgrade price rendering
         if (money >= 100 * upgrades * upgrades) {
             gc.setFill(Color.GREEN);
             gc.setFont(customFont2);
@@ -188,5 +189,4 @@ public class GamePanel extends Pane {
     public void setMoneyGrowth(int newValue) {
         this.moneyGrowth = newValue;
     }
-
 }

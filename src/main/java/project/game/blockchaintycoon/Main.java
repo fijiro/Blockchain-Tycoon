@@ -11,6 +11,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     private static Scene gameScene;
     //private static Scene shopScene;
+    private static Scene winScene;
     private static Scene helpScene;
 
     @Override
@@ -32,42 +33,43 @@ public class Main extends Application {
         xButton.setLayoutX(800);
         xButton.setLayoutY(5);
         xButton.setGraphic(xButtonImage);
-        xButton.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background-insets: 0;"
-        );
+        xButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         xButton.setOnAction(_ -> primaryStage.setScene(gameScene));
 
         Pane tutorialPane = new Pane();
-        tutorialPane.getChildren().add(tutorialImage);
+        tutorialPane.getChildren().addAll(tutorialImage);
         tutorialPane.getChildren().add(xButton);
         helpScene = new Scene(tutorialPane, 900, 700);
-
         Button startGameButton = new Button();
-
         Pane lorePane = new Pane(loreImage, startGameButton);
         Scene loreScene = new Scene(lorePane, 900, 700); // scene lorelle
+
+        Button restartButton = new Button();
+        restartButton.setLayoutX(123);
+        restartButton.setLayoutX(123);
+        restartButton.setGraphic(new ImageView(new Image("startbutton.png")));
+        restartButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
+        restartButton.setOnAction(_ -> {
+            primaryStage.setScene(gameScene);
+            gamePanel.startGameThread();
+        });
+        Pane winPane = new Pane(new ImageView(new Image("background.png")), restartButton);
+        winScene = new Scene(winPane, 900, 700);
 
         startGameButton.setLayoutX(625);
         startGameButton.setLayoutY(350);
         startGameButton.setGraphic(startImage);
-        startGameButton.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background-insets: 0;"
-        );
+        startGameButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         startGameButton.setOnAction(_ -> {
             primaryStage.setScene(gameScene);
-            gamePanel.setMoneyGrowth(4);  // aloittaa rahojen kasvun
+            gamePanel.startGameThread();
         });
 
         Button newGameButton = new Button();
         newGameButton.setLayoutX(270);
         newGameButton.setLayoutY(380);
         newGameButton.setGraphic(upImage);
-        newGameButton.setStyle(
-                "-fx-background-color: transparent;" +
-                        "-fx-background-insets: 0;"
-        );
+        newGameButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         newGameButton.setOnAction(_ -> primaryStage.setScene(loreScene));
 
         Pane startPane = new Pane();
@@ -82,18 +84,18 @@ public class Main extends Application {
         primaryStage.setFullScreen(false);  // Koko näytön tila mut emt tullaanko käyttämään
         primaryStage.setOnCloseRequest(_ -> System.exit(0));
         primaryStage.show();
-
-        gamePanel.startGameThread();
     }
 
 //    public static Scene getGameScene() {
 //        return gameScene;
 //    }
 
-//    public static Scene getShopScene() {
+    //    public static Scene getShopScene() {
 //        return shopScene;
 //    }
-    public static Scene getHelpScene() { return helpScene; }
+    public static Scene getHelpScene() {return helpScene;}
+
+    public static Scene getWinScene() {return winScene;}
 
     public static void main(String[] args) {
         launch(args);
