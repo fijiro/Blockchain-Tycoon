@@ -180,6 +180,16 @@ public class GamePanel extends Pane {
             gc.setFont(customFont2);
             gc.fillText(STR."\{100 * upgrades * upgrades}$", 663, 540);
         }
+        if(money >= 1000) {
+            gc.setFill(Color.GREEN);
+            gc.setFont(customFont2);
+            gc.fillText("100",200,50);
+        }
+        else {
+            gc.setFill(Color.RED);
+            gc.setFont(customFont2);
+            gc.fillText("100$",200,50);
+        }
     }
 
 //    public void setShopButtonVisibility(boolean visible) {
