@@ -28,7 +28,7 @@ public class GamePanel extends Pane {
     final int screenWidth = 900;
     final int screenHeight = 700;
     Timeline gameLoop;
-    private double money = 1;
+    private double money = 9000;
     private int moneyGrowth = 4; // money Growth per second
     private int customers = 1;
     private int nodes = 1;
@@ -36,6 +36,7 @@ public class GamePanel extends Pane {
     private int upgrades = 1;
     private final Canvas canvas;
     private final Font customFont, customFont2;
+    private Button winButton;
 
     public GamePanel(Stage primaryStage) {
         canvas = new Canvas(screenWidth, screenHeight);
@@ -100,8 +101,8 @@ public class GamePanel extends Pane {
         helpButton.setLayoutX(800);
         helpButton.setLayoutY(5);
 
-        Image winButtonImage = new Image("newgamebutton.png");
-        Button winButton = new Button();
+        Image winButtonImage = new Image("sellbutton.png");
+        winButton = new Button();
         winButton.setGraphic(new ImageView(winButtonImage));
         winButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         winButton.setLayoutX(50);
@@ -115,8 +116,9 @@ public class GamePanel extends Pane {
             nodes = 1;
             upgrades = 1;
             primaryStage.setScene(winScene);
+            winButton.setVisible(false);
         });
-
+        winButton.setVisible(false);
         //Render all buttons to the screen
         this.getChildren().addAll(buyNodeButton, buyAdButton, buyPartsButton, helpButton, winButton);
     }
@@ -136,6 +138,9 @@ public class GamePanel extends Pane {
 
     public void update() { // Updates current money by its growth
         money += (double) moneyGrowth / 10;
+        if(money > 1000) {
+            winButton.setVisible(true);
+        }
     }
 
     public void render() { // Render prices for ads, nodes and upgrades to the screen.
@@ -185,11 +190,11 @@ public class GamePanel extends Pane {
             gc.setFont(customFont2);
             gc.fillText("1000$",200,50);
         }
-        else {
-            gc.setFill(Color.RED);
-            gc.setFont(customFont2);
-            gc.fillText("1000$",200,50);
-        }
+//        else {
+//            gc.setFill(Color.RED);
+//            gc.setFont(customFont2);
+//            gc.fillText("1000$",200,50);
+//        }
     }
 
 //    public void setShopButtonVisibility(boolean visible) {

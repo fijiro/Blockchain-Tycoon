@@ -24,8 +24,10 @@ public class Main extends Application {
 
         ImageView startBg = new ImageView(new Image("start.png"));
         ImageView upImage = new ImageView(new Image("newgamebutton.png"));
-        ImageView loreImage = new ImageView(new Image("loretesti.png"));
+        ImageView loreImage = new ImageView(new Image("lorescreen.png"));
         ImageView startImage = new ImageView(new Image("startbutton.png"));
+        startImage.setScaleY(0.5f);
+        startImage.setScaleX(0.5f);
         ImageView tutorialImage = new ImageView(new Image("ohjeetdemo.png"));
         ImageView xButtonImage = new ImageView(new Image("xnappi.png"));
 
@@ -45,19 +47,19 @@ public class Main extends Application {
         Scene loreScene = new Scene(lorePane, 900, 700); // scene lorelle
 
         Button restartButton = new Button();
-        restartButton.setLayoutX(123);
-        restartButton.setLayoutX(123);
-        restartButton.setGraphic(new ImageView(new Image("startbutton.png")));
+        restartButton.setLayoutX(500);
+        restartButton.setLayoutY(450);
+        restartButton.setGraphic(new ImageView(new Image("newgamebutton.png")));
         restartButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         restartButton.setOnAction(_ -> {
             primaryStage.setScene(gameScene);
             gamePanel.startGameThread();
         });
-        Pane winPane = new Pane(new ImageView(new Image("background.png")), restartButton);
+        Pane winPane = new Pane(new ImageView(new Image("congratulations.png")), restartButton);
         winScene = new Scene(winPane, 900, 700);
 
-        startGameButton.setLayoutX(625);
-        startGameButton.setLayoutY(350);
+        startGameButton.setLayoutX(640);
+        startGameButton.setLayoutY(580);
         startGameButton.setGraphic(startImage);
         startGameButton.setStyle("-fx-background-color: transparent;" + "-fx-background-insets: 0;");
         startGameButton.setOnAction(_ -> {
